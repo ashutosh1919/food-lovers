@@ -1,0 +1,16 @@
+@import url('./fonts.css');
+
+.primary-color {
+    color: #2563EB;
+}
+
+.primary-color:hover {
+    color: #1D4ED8;
+}
+
+.nav-link { 
+    font-size: 18px;
+    font-family: 'Product Sans';
+    font-weight: normal;
+    font-style: normal;
+}

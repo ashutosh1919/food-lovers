@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'Product Sans';
+    src: url('../assets/fonts/ProductSans-Black.woff2') format('woff2'),
+        url('../assets/fonts/ProductSans-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Product Sans';
+    src: url('../assets/fonts/ProductSans-Light.woff2') format('woff2'),
+        url('../assets/fonts/ProductSans-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Product Sans';
+    src: url('../assets/fonts/ProductSans-Thin.woff2') format('woff2'),
+        url('../assets/fonts/ProductSans-Thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Product Sans';
+    src: url('../assets/fonts/ProductSans-Italic.woff2') format('woff2'),
+        url('../assets/fonts/ProductSans-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Product Sans';
+    src: url('../assets/fonts/ProductSans-Regular.woff2') format('woff2'),
+        url('../assets/fonts/ProductSans-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Product Sans';
+    src: url('../assets/fonts/ProductSans-Medium.woff2') format('woff2'),
+        url('../assets/fonts/ProductSans-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Product Sans';
+    src: url('../assets/fonts/ProductSans-Bold.woff2') format('woff2'),
+        url('../assets/fonts/ProductSans-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
