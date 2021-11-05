@@ -8,9 +8,38 @@
     color: #1D4ED8;
 }
 
-.nav-link { 
-    font-size: 18px;
+.font-black {
+    font-family: 'Product Sans';
+    font-weight: 900;
+    font-style: normal;
+}
+
+.font-bold {
+    font-family: 'Product Sans';
+    font-weight: bold;
+    font-style: normal;
+}
+
+.font-regular {
     font-family: 'Product Sans';
     font-weight: normal;
+    font-style: normal;
+}
+
+.font-medium {
+    font-family: 'Product Sans';
+    font-weight: 500;
+    font-style: normal;
+}
+
+.font-thin {
+    font-family: 'Product Sans';
+    font-weight: 100;
+    font-style: normal;
+}
+
+.font-light {
+    font-family: 'Product Sans';
+    font-weight: 300;
     font-style: normal;
 }
