@@ -18,12 +18,11 @@
     exit();
   }
 
-  echo 'Success: A proper connection to MySQL was made.';
-  echo 'Database Name: '.$db_db;
-  echo '<br>';
-  echo 'Host information: '.$mysqli->host_info;
-  echo '<br>';
-  echo 'Protocol version: '.$mysqli->protocol_version;
-
-  $mysqli->close();
+  function executeQuery($query){
+      global $mysqli;
+      if($mysqli->query($query) === TRUE){
+          return 200;
+      }
+      return 500;
+  }
 ?>

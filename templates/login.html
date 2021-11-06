@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
   <link href="../styles/main.css" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body class="bg-blue-50">
 
@@ -70,7 +71,7 @@
 		</nav>
     </header>
 
-    <!--Hero Section-->
+    <!--Login Section-->
 	<div class="bg-grey-lighter min-h-screen flex flex-col">
         <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
             <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
@@ -78,29 +79,34 @@
                 <input 
                     type="text"
                     class="block border border-grey-light w-full p-3 rounded mb-4 font-light"
+					id="login-email"
                     name="email"
                     placeholder="Email" />
 
                 <input 
                     type="password"
                     class="block border border-grey-light w-full p-3 rounded mb-4 font-light"
+					id='login-password'
                     name="password"
                     placeholder="Password" />
 
                 <button
                     type="submit"
+					onClick="loginInputHandler()"
                     class="w-full text-center py-3 rounded bg-blue-600 text-white hover:bg-blue-700 focus:outline-none my-1 font-regular"
                 >Login</button>
             </div>
 
             <div class="text-grey-dark mt-6 font-regular">
                 Don't have an account? 
-                <a class="no-underline border-b border-blue text-blue-600" href="../login/">
+                <a class="no-underline border-b border-blue text-blue-600" href="signup.html">
                     Sign up
                 </a>.
             </div>
         </div>
     </div>
+
+	<script type="text/javascript" src="../scripts/loginHandler.js" ></script>
 
 </body>
 </html>
