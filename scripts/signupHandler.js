@@ -43,7 +43,6 @@ function signupInputHandler(){
         alert('Password and Confirm Password should match.');
         return;
     }
-    // TODO: DB operation for registering user.
     data = { "function": "create_user", "name": nameBox.value, "email": emailBox.value, "password": passwordBox.value}
     console.log(data);
     $.ajax({
@@ -52,6 +51,8 @@ function signupInputHandler(){
         data: JSON.stringify(data),
         success: function(res) {
             console.log(res);
+            var expires = (new Date(Date.now()+ 86400*1000)).toUTCString();
+            document.cookie = "FOOD_LOVERS_LOGIN=" + res["email"] + "; expires=" + expires + ";path=/;";
             window.location.href = 'home.html';
         },
         error: function(err){

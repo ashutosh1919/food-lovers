@@ -8,6 +8,11 @@
     color: #1D4ED8;
 }
 
+.profile {
+    width: 45px;
+    height: auto;
+}
+
 .font-black {
     font-family: 'Product Sans';
     font-weight: 900;

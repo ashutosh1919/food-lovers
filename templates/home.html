@@ -7,6 +7,7 @@
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
   <link href="../styles/main.css" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 </head>
 <body class="bg-blue-50">
 
@@ -27,8 +28,9 @@
 					<div class="hidden md:flex items-center space-x-3 ">
                         <a href="home.html" class="py-4 px-2 text-base font-regular primary-color">Home</a>
 						<a href="" class="py-4 px-2 text-base font-regular primary-color">Contact Us</a>
-						<a href="login.html" class="py-2 px-2 text-base font-regular primary-color">Log In</a>
-						<a href="signup.html">
+						<a id="nav-profile-img" href="" class="none md:visible"><img class="h-9 rounded-full" src='../assets/images/default-profile.jpeg' /></a>
+						<a id="nav-login-btn" href="login.html" class="py-2 px-2 text-base font-regular primary-color">Log In</a>
+						<a id="nav-signup-btn" href="signup.html">
 						<button class="bg-blue-600 hover:bg-blue-700 text-white text-base font-regular py-2 px-4 rounded">
                             Sign Up
                         </button>
@@ -55,9 +57,11 @@
 			<!-- mobile menu -->
 			<div class="hidden mobile-menu">
 				<ul class="">
-					<li class="active"><a href="index.html" class="block text-sm px-2 py-4 text-white bg-blue-600 text-base font-regular">Home</a></li>
+					<li id="nav-profile-img-mobile"><a href="#about" class="block text-sm px-2 py-4 hover:bg-blue-500 transition duration-300 text-base font-regular">Profile</a></li>
+					<li class="active"><a href="home.html" class="block text-sm px-2 py-4 text-white bg-blue-600 text-base font-regular">Home</a></li>
 					<li><a href="#services" class="block text-sm px-2 py-4 hover:bg-blue-600 transition duration-300 text-base font-regular">Contact Us</a></li>
-					<li><a href="#about" class="block text-sm px-2 py-4 hover:bg-blue-500 transition duration-300 text-base font-regular">Log In</a></li>
+					<li id="nav-login-btn-mobile"><a href="login.html" class="block text-sm px-2 py-4 hover:bg-blue-500 transition duration-300 text-base font-regular">Log In</a></li>
+					<li id="nav-signup-btn-mobile"><a href="signup.html" class="block text-sm px-2 py-4 hover:bg-blue-500 transition duration-300 text-base font-regular">Sign Up</a></li>
 				</ul>
 			</div>
 			<script>
@@ -115,6 +119,8 @@
 		  "
 		></div>
 	  </section>
+
+	  <script type="text/javascript" src='../scripts/loginHandler.js'></script>
 
 </body>
 </html>

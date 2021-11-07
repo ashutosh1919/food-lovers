@@ -18,11 +18,12 @@
     exit();
   }
 
+  mysqli_set_charset($mysqli, "utf8");
+
   function executeQuery($query){
       global $mysqli;
-      if($mysqli->query($query) === TRUE){
-          return 200;
-      }
-      return 500;
+      $result = $mysqli->query($query);
+      return $result;
   }
+
 ?>

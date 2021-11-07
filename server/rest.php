@@ -17,6 +17,10 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
             $response = json_encode(handleSignup($_POST));
             echo $response;
             break;
+        case 'login':
+            $response = json_encode(handleLogin($_POST));
+            echo $response;
+            break;
     }
 }
 
