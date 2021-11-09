@@ -1,9 +1,9 @@
 <?php
 $users = 'users';
 
-function createUserQuery($name, $email, $password){
+function createUserQuery($name, $email, $password, $createdAt){
     global $users;
-    $query = "INSERT INTO $users (NAME, EMAIL, PASSWORD) VALUES ('$name', '$email', '$password');";
+    $query = "INSERT INTO $users (NAME, EMAIL, PASSWORD, CREATED_AT) VALUES ('$name', '$email', '$password', '$createdAt');";
     return $query;
 }
 

@@ -13,6 +13,30 @@ function validateLoginPassowrd(password){
     return true;
 }
 
+function locallyStoreUser(res) {
+    console.log(res);
+    if('email' in res){
+        window.localStorage.setItem('EMAIL', res.email);
+    }
+    if('name' in res){
+        window.localStorage.setItem('NAME', res.name);
+    }
+    if('gender' in res){
+        window.localStorage.setItem('GENDER', res.gender);
+    }
+    if('profile' in res){
+        window.localStorage.setItem('PROFILE_URL', res.profile);
+    }
+    if('location' in res){
+        window.localStorage.setItem('LOCATION', res.location);
+    }
+    if('caption' in res){
+        window.localStorage.setItem('CAPTION', res.caption);
+    }
+    if('created_at' in res){
+        window.localStorage.setItem('CREATED_AT', res.created_at);
+    }
+}
 
 function loginInputHandler(){
     emailBox = document.getElementById('login-email');
@@ -38,12 +62,11 @@ function loginInputHandler(){
                 alert(res["error"]);
                 return;
             }
-            window.localStorage.setItem('EMAIL', res["email"]);
-            window.localStorage.setItem('NAME', res["name"]);
-            window.localStorage.setItem('PROFILE_URL', res["profile"]);
 
+            console.log(res);
             var expires = (new Date(Date.now()+ 86400*1000)).toUTCString();
             document.cookie = "FOOD_LOVERS_LOGIN=" + res["email"] + "; expires=" + expires + ";path=/;";
+            locallyStoreUser(res);
             window.location.href = 'home.html';
         },
         error: function(error){
