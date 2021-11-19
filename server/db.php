@@ -3,6 +3,8 @@
   $db_user = 'root';
   $db_password = 'root';
   $db_db = 'food_lovers';
+
+  $bucketUrl = '../bucket/images/';
  
   $mysqli = @new mysqli(
     $db_host,

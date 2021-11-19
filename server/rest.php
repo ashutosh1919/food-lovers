@@ -7,6 +7,11 @@ header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+$bucketUrl = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/bucket/images/';
+$name = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
+$fpname = "../bucket/images/163668960824.png";
+echo $bucketUrl;
+
 if($_SERVER["REQUEST_METHOD"] == 'POST'){
     $_POST = json_decode(file_get_contents("php://input"), true);
     if(!isset($_POST["function"])){
@@ -19,6 +24,10 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
             break;
         case 'login':
             $response = json_encode(handleLogin($_POST));
+            echo $response;
+            break;
+        case 'update_user':
+            $response = json_encode(handleUpdateUser($_POST));
             echo $response;
             break;
     }

@@ -51,10 +51,11 @@ function loginInputHandler(){
         return;
     }
     // TODO: DB operation and account exists check
-    data = { "function": "login", "email": emailBox.value, "password": passwordBox.value};
+    data = { "email": emailBox.value, "password": passwordBox.value};
     $.ajax({
         type: 'POST',
-        url: '../server/rest.php',
+        url: 'http://localhost:8000/login',
+        // headers: { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': '*', 'Access-Control-Allow-Headers': '*'},
         data: JSON.stringify(data),
         success: function(res) {
             console.log(JSON.stringify(res));
@@ -76,6 +77,14 @@ function loginInputHandler(){
     })
 }
 
+function displayImageOnProfileIcon(){
+    let profileUrl = String(window.localStorage.getItem('PROFILE_URL'));
+    // console.log(profileUrl);
+    if(profileUrl!='null'){
+        document.getElementById('nav-profile-img-icon').src = profileUrl;
+    }
+}
+
 function alterNavigation(isLoggedIn){
     profileImage = document.getElementById('nav-profile-img');
     loginButton = document.getElementById('nav-login-btn');
@@ -85,6 +94,7 @@ function alterNavigation(isLoggedIn){
     signupButtonMobile = document.getElementById('nav-signup-btn-mobile');
     if(isLoggedIn){
         profileImage.style.display = 'visible';
+        displayImageOnProfileIcon();
         loginButton.style.display = 'none';
         signupButton.style.display = 'none';
         profileImageMobile.style.display = 'visible';

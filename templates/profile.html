@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
   <link href="../styles/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.min.css" />
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
@@ -29,7 +30,7 @@
 					<div class="hidden md:flex items-center space-x-3 ">
                         <a href="home.html" class="py-4 px-2 text-base font-regular primary-color">Home</a>
 						<a href="" class="py-4 px-2 text-base font-regular primary-color">Contact Us</a>
-						<a id="nav-profile-img" href="" class="none md:visible"><img class="h-9 rounded-full" src='../assets/images/default-profile.jpeg' /></a>
+						<a id="nav-profile-img" href="profile.html" class="none md:visible"><img id="nav-profile-img-icon" class="h-9 w-9 rounded-full object-cover items-center justify-content" src='../assets/images/default-profile.jpeg' /></a>
 						<a id="nav-login-btn" href="login.html" class="py-2 px-2 text-base font-regular primary-color">Log In</a>
 						<a id="nav-signup-btn" href="signup.html">
 						<button class="bg-blue-600 hover:bg-blue-700 text-white text-base font-regular py-2 px-4 rounded">
@@ -58,7 +59,7 @@
 			<!-- mobile menu -->
 			<div class="hidden mobile-menu">
 				<ul class="">
-					<li id="nav-profile-img-mobile" class="active"><a href="#about" class="block text-sm px-2 py-4 hover:bg-blue-500 transition duration-300 text-base font-regular">Profile</a></li>
+					<li id="nav-profile-img-mobile" class="active"><a href="profile.html" class="block text-sm px-2 py-4 hover:bg-blue-500 transition duration-300 text-base font-regular">Profile</a></li>
 					<li class="active"><a href="home.html" class="block text-sm px-2 py-4 text-white bg-blue-600 text-base font-regular">Home</a></li>
 					<li><a href="#services" class="block text-sm px-2 py-4 hover:bg-blue-600 transition duration-300 text-base font-regular">Contact Us</a></li>
 					<li id="nav-login-btn-mobile"><a href="login.html" class="block text-sm px-2 py-4 hover:bg-blue-500 transition duration-300 text-base font-regular">Log In</a></li>
@@ -102,7 +103,7 @@
                         </li>
                     </ul>
                     <div class="flex mx-auto justify-center flex-wrap gap-6 mt-2">
-                        <button id="self-logout" type="button" class="bg-blue-600 hover:bg-blue-700 text-white text-base font-regular py-2 px-4 rounded">
+                        <button id="self-logout" onClick="handleLogout()" type="button" class="bg-blue-600 hover:bg-blue-700 text-white text-base font-regular py-2 px-4 rounded">
                           Logout
                         </button>
                       </div>
@@ -167,7 +168,7 @@
                                     </svg>
                                 </span>
                                 <span class="tracking-wide text-blue-600 ml-2 font-bold">Posts</span>
-                                <button type="button" class="flex flex-row items-center bg-blue-600 hover:bg-blue-700 text-white text-base font-regular py-2 px-4 rounded ml-auto">
+                                <button type="button" class="post-modal-open flex flex-row items-center bg-blue-600 hover:bg-blue-700 text-white text-base font-regular py-2 px-4 rounded ml-auto">
                                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                                     Create Post
                                 </button>
@@ -225,7 +226,7 @@
         </div>
     </div>
 
-    <!--Modal-->
+    <!--Edit Profile Modal-->
     <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
         <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
         
@@ -256,8 +257,11 @@
                     <div class="w-full md:w-3/12">
                         <div class="image overflow-hidden relative">
                             <img class="h-auto w-full mx-auto"
+                                for="self-upload-profile"
+                                id="self-edit-profile"
                                 src="../assets/images/default-profile.jpeg"
                                 alt="">
+                                <input class="w-full h-full opacity-0 absolute top-0 left-0" type="file" onChange="editProfileChange()" id="self-upload-profile" accept="image/png, image/jpeg, image/jpg" />
                                 <svg class="w-6 h-6 fill-current cursor-pointer text-blue-600 hover:text-blue-600 mx-1 my-1 absolute right-0 bottom-0" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
                         </div>
                     </div>
@@ -265,31 +269,35 @@
                     <!-- Right Side -->
                     <div class="w-full md:w-9/12 mx-2">
                         <input 
+                        id="self-edit-name"
                         type="text"
                         class="block border border-grey-light text-base w-full p-3 rounded mb-4 font-light"
                         name="name"
                         placeholder="Full Name" />
                         <input 
+                        id="self-edit-email"
                         type="email"
                         class="block border border-grey-light text-base w-full p-3 rounded mb-4 font-light"
                         name="email"
                         placeholder="Email" />
-                        <input 
+                        <input
+                        id="self-edit-location"
                         type="text"
                         class="block border border-grey-light text-base w-full p-3 rounded mb-4 font-light"
                         name="location"
                         placeholder="Current Location" />
                         <div class="mb-4">
                             <label class="inline-flex items-center">
-                              <input type="radio" class="form-radio font-light" name="gender" value="male">
+                              <input id="self-edit-male" type="radio" class="form-radio font-light" name="gender" value="male">
                               <span class="ml-2">Male</span>
                             </label>
                             <label class="inline-flex items-center ml-6">
-                              <input type="radio" class="form-radio font-light" name="gender" value="female">
+                              <input id="self-edit-female" type="radio" class="form-radio font-light" name="gender" value="female">
                               <span class="ml-2">Female</span>
                             </label>
                         </div>
                         <textarea
+                            id="self-edit-caption"
                             type="text"
                             class="block border border-grey-light text-base w-full p-3 rounded mb-4 font-light"
                             name="caption"
@@ -300,8 +308,118 @@
 
             <!--Footer-->
             <div class="flex justify-end pt-2">
-            <button class="px-4 bg-transparent p-3 rounded-lg text-blue-600 font-regular hover:bg-gray-100 mr-2">Save</button>
+            <button onClick="onSavingEditForm()" class="px-4 bg-transparent p-3 rounded-lg text-blue-600 font-regular hover:bg-gray-100 mr-2">Save</button>
             <button class="modal-close px-4 bg-blue-600 p-3 rounded-lg text-white font-regular hover:bg-blue-700">Close</button>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+
+
+    <!--Create Post Modal-->
+    <div class="post-modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+        <div class="post-modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+        
+        <div class="post-modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+        
+        <div class="post-modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+            <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+            </svg>
+            <span class="text-sm font-regular">(Esc)</span>
+        </div>
+
+        <!-- Add margin if you want to see some of the overlay behind the modal-->
+        <div class="post-modal-content py-4 text-left px-6 overflow-auto h-96">
+            <!--Title-->
+            <div class="flex justify-between items-center pb-3">
+            <p class="text-2xl font-medium text-blue-600">Post New Dish</p>
+            <div class="post-modal-close cursor-pointer z-50">
+                <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                </svg>
+            </div>
+            </div>
+
+            <!--Body-->
+            <div class="container mx-auto">
+                <!--Dish Image-->
+                <div class="mb-4">
+                    <label class="text-sm font-regular text-black block mb-1" for="user_avatar">Upload Dish Image</label>
+                    <input class="block w-full cursor-pointer bg-blue-50 border border-blue-300 text-gray-900 focus:outline-none focus:border-transparent text-sm rounded-lg" aria-describedby="user_avatar_help" id="post-dish-image" type="file" accept="image/png, image/jpeg, image/jpg">
+                    <div class="mt-1 text-sm text-gray-500" id="user_avatar_help">A dish picture is useful for people to see the final recipe.</div>
+                </div>
+
+                <!--Dish Name-->
+                <div class="mb-4">
+                    <label for="post-dish-name" class="text-sm font-regular text-black block mb-1">Name of Dish</label>
+                    <input type="text" id="post-dish-name" class="bg-blue-50 border border-gray-300 text-gray-900 sm:text-sm font-light rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Italian Noodles" required>
+                </div>
+
+                <!--Cuisine type-->
+                <div class="mb-4">
+                    <label for="post-cuisine-types" class="text-sm font-regular text-gray-900 block mb-1">Select Cuisine Type</label>
+                    <select id="post-cuisine-types" class="bg-blue-50 border border-gray-300 text-gray-900 sm:text-sm font-light rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
+                        <option>American</option>
+                        <option>Indian</option>
+                        <option>French</option>
+                        <option>Chinese</option>
+                        <option>Japanese</option>
+                        <option>Italian</option>
+                        <option>Spanish</option>
+                        <option>Greek</option>
+                        <option>Mediterranean</option>
+                        <option>Lebanese</option>
+                        <option>Moroccan</option>
+                        <option>Turkish</option>
+                        <option>Thai</option>
+                        <option>Cajun</option>
+                        <option>Mexican</option>
+                        <option>Caribbean</option>
+                        <option>German</option>
+                        <option>Russian</option>
+                        <option>Hungarian</option>
+                    </select>
+                </div>
+
+                <!--Ingredients-->
+                <div id='post-ingredients-group' class='mb-4'>
+                    <label class="text-sm font-regular text-gray-900 block mb-1">Ingredients</label>
+                    <div id="post-ingredients-inputs" class="mb-2">
+                        <input type="text" class="bg-blue-50 border border-gray-300 text-gray-900 sm:text-sm font-light rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 mb-2" placeholder="Ingredient 1" required>
+                    </div>
+                    <button type="button" id="post-add-ingredients" onClick="addIngredientInput()" class="flex flex-row items-center bg-blue-100 hover:bg-blue-200 text-gray-900 text-sm font-regular py-2 px-4 rounded-full">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                        Add Ingredient
+                    </button>
+                </div>
+
+                <!--Directions-->
+                <div class="mb-4">
+                    <label class="text-sm font-regular text-gray-900 block mb-1">Directions</label>
+                    <textarea id="post-directions" class="bg-blue-50 border border-gray-300 text-gray-900 sm:text-sm font-light rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Steps to prepare dish"></textarea>
+                </div>
+
+                <!--Preparation Time-->
+                <div class="mb-4">
+                    <label class="text-sm font-regular text-gray-900 block mb-1">Preparation Time</label>
+                    <input type="text" id="post-prep-time" class="bg-blue-50 border border-gray-300 text-gray-900 sm:text-sm font-light rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 mb-2" placeholder="30 Minutes, 1.5 Hour etc." required>
+                </div>
+
+                <!--Preparation Video-->
+                <div class="mb-4">
+                    <label class="text-sm font-regular text-black block mb-1" for="user_avatar">Upload Prepartion Video (optional)</label>
+                    <input class="block w-full cursor-pointer bg-blue-50 border border-blue-300 text-gray-900 focus:outline-none focus:border-transparent text-sm rounded-lg" aria-describedby="user_avatar_help" id="post-dish-video" type="file" accept="video/mp4, video/mov, video/mkv">
+                    <div class="mt-1 text-sm text-gray-500" id="user_avatar_help">A dish preparation video is useful for people to quickly follow procedure.</div>
+                </div>
+
+            </div>
+
+            <!--Footer-->
+            <div class="flex justify-end pt-2">
+            <button onClick="onDishPost()" class="px-4 bg-transparent p-3 rounded-lg text-blue-600 font-regular hover:bg-gray-100 mr-2">Save</button>
+            <button class="post-modal-close px-4 bg-blue-600 p-3 rounded-lg text-white font-regular hover:bg-blue-700">Close</button>
             </div>
             
         </div>

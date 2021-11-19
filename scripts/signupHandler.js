@@ -82,11 +82,11 @@ function signupInputHandler(){
         alert('Password and Confirm Password should match.');
         return;
     }
-    data = { "function": "create_user", "name": nameBox.value, "email": emailBox.value, "password": passwordBox.value, "created_at": createdAt}
+    data = { "name": nameBox.value, "email": emailBox.value, "password": passwordBox.value, "created_at": createdAt}
     console.log(data);
     $.ajax({
         type: 'POST',
-        url: '../server/rest.php',
+        url: 'http://localhost:8000/createUser',
         data: JSON.stringify(data),
         success: function(res) {
             console.log(res);
