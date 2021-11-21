@@ -94,3 +94,27 @@ Route::get('/images/{file}', [ function ($file) {
         return response()->file($path, array('Content-Type' =>'image/png'));
     }
 }]);
+
+Route::post('/postDish', function (Request $request){
+    $document = $request->all();
+    $dishImage = $request->file('dish_image')->store('images');
+    $document['dish_image'] = asset($dishImage);
+    if($request->has('dish_video')){
+        $dishVideo = $request->file('dish_video')->store('videos');
+        $document['dish_video'] = asset($dishVideo);
+    }
+    else {
+        $document['dish_video'] = null;
+    }
+    $document['owner_id'] = getIdFromEmail($document['owner_email']);
+    $query = postDishQuery($document);
+    DB::insert($query);
+    return json_encode(Array('status' => 200));
+});
+
+Route::post('/getSelfPostedDishes', function (Request $request){
+    $document = json_decode($request->getContent(), true);
+    $id = getIdFromEmail($document['owner_email']);
+    $results = DB::select(getUserDishesQuery($id));
+    return json_encode(Array('data' => $results));
+});

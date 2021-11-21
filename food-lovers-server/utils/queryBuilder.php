@@ -1,7 +1,8 @@
 <?php
 
-global $users;
+global $users, $dishes;
 $users = 'users';
+$dishes = 'dishes';
 
 function createUserQuery($name, $email, $password, $createdAt){
     global $users;
@@ -47,6 +48,21 @@ function createUserUpdateQuery($id, $document){
     }
     $query = trim($query, ", ");
     $query .= " WHERE ID=$id;";
+    return $query;
+}
+
+function postDishQuery($document){
+    global $dishes;
+    $query = "INSERT INTO $dishes (DISH_NAME, CUISINE_TYPE, DISH_IMG_URL, DISH_INGREDIENTS, DISH_DIRECTIONS, DISH_VIDEO_URL, OWNER_ID, PREP_TIME) " .
+        "VALUES ('" . $document['dish_name'] ."', '" . $document['cuisine_type'] . "', '" . $document['dish_image'] . "', " .
+        "'" . $document['dish_ingredients'] . "', '" . $document['dish_directions'] . "', '" . $document['dish_video'] . "', " .
+        "'" . $document['owner_id'] . "', '" . $document['dish_prepTime'] . "');";
+    return $query;
+}
+
+function getUserDishesQuery($id){
+    global $dishes;
+    $query = "SELECT * FROM $dishes WHERE OWNER_ID=$id";
     return $query;
 }
 

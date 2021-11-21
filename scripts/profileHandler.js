@@ -13,6 +13,80 @@ function getStoredProfile(){
     return [profileUrl, fullName, caption, createdAt, gender, currentLocation, email]
 }
 
+function populatePostCards(data){
+    let postSection = document.getElementById('self-posts');
+    console.log(data);
+
+    for(let i = 0; i < data.length; i++){
+        let dish = data[i];
+
+        // Card div
+        let postCard = document.createElement('div');
+        postCard.className = 'rounded overflow-hidden shadow-lg';
+
+        // Image
+        let dishImage = document.createElement('img');
+        dishImage.className = 'w-full h-64 object-cover';
+        dishImage.src = dish["DISH_IMG_URL"];
+        dishImage.alt = dish["DISH_NAME"];
+
+        // Text div
+        let textDiv = document.createElement('div');
+        textDiv.className = 'px-6 py-4';
+        let titleText = document.createElement('div');
+        titleText.className = 'font-medium text-xl mb-2 overflow-ellipsis overflow-hidden whitespace-nowrap';
+        titleText.textContent = dish["DISH_NAME"];
+        textDiv.appendChild(titleText);
+        let captionText = document.createElement('p');
+        captionText.className = 'font-regular text-gray-600 text-base leading-normal h-12 overflow-ellipsis overflow-hidden w-full';
+        let ings = dish["DISH_INGREDIENTS"];
+        ings = ings.replaceAll('$', ', ').trim(', ');
+        captionText.textContent = ings;
+        textDiv.appendChild(captionText);
+
+        // Tag div
+        let tagDiv = document.createElement('div');
+        tagDiv.className = 'px-6 pb-2';
+        let tagSpan = document.createElement('span');
+        tagSpan.className = 'inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2';
+        tagSpan.textContent = dish["CUISINE_TYPE"];
+        tagDiv.appendChild(tagSpan);
+
+        postCard.appendChild(dishImage);
+        postCard.appendChild(textDiv);
+        postCard.appendChild(tagDiv);
+
+        postSection.appendChild(postCard);
+    }
+
+}
+
+function populatePosts(){
+    let ownerEmail = window.localStorage.getItem('EMAIL');
+    if(ownerEmail === null || ownerEmail === undefined){
+        document.getElementById('self-posts').style.display = 'none';
+    }
+    else {
+        document.getElementById('self-no-posts').style.display = 'none';
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8000/getSelfPostedDishes',
+            data: JSON.stringify({'owner_email': ownerEmail}),
+            success: function(res) {
+                // console.log(JSON.stringify(res));
+                // console.log('Response', res);
+                console.log(typeof res);
+                data = JSON.parse(res);
+                populatePostCards(data["data"]);
+            },
+            error: function(error){
+                console.log('Error');
+                console.log(JSON.stringify(error));
+            }
+        })
+    }
+}
+
 function populateProfileData() {
     const [profileUrl, fullName, caption, createdAt, gender, currentLocation, email] = getStoredProfile(); 
     if(profileUrl!=='null'){
@@ -50,6 +124,7 @@ function populateProfileData() {
         document.getElementById('self-about-email').href = 'mailto:' + email;
         document.getElementById('self-edit-email').value = email;
     }
+    populatePosts();
 }
 
 function locallyStoreUser(res) {
@@ -254,22 +329,72 @@ function addIngredientInput(){
     ingredientsList.appendChild(newIngredient);
 }
 
+function accumulateIngredients(){
+    let ingredients = "";
+    $('#post-ingredients-inputs input').each(function () {
+        if(this.value.trim() !== ''){
+            ingredients += this.value.trim() + '$';
+        }
+    });
+
+    if(ingredients.length === 0){
+        alert('There must be at least 1 ingredient');
+        return null;
+    }
+    return ingredients;
+}
+
 function collectPostedDishData(){
     let dishImage = document.getElementById('post-dish-image');
     let dishName = document.getElementById('post-dish-name');
     let cuisineType = document.getElementById('post-cuisine-types');
-    let ingredients = document.getElementById('post-ingredients-inputs');
     let directions = document.getElementById('post-directions');
     let prepTime = document.getElementById('post-prep-time');
     let dishVideo = document.getElementById('post-dish-video');
     let postedDish = {}
 
     if(dishImage.files.length > 0){
-        
+        postedDish['dish_image'] = dishImage.files[0];
     }
     else{
         alert('To post a recipe, it must contain image.');
         return null;
+    }
+
+    if(dishName.value.trim() !== ''){
+        postedDish['dish_name'] = dishName.value.trim();
+    }
+    else{
+        alert('To post a recipe, it must contain name.');
+        return null;
+    }
+
+    postedDish['cuisine_type'] = cuisineType.options[cuisineType.selectedIndex].text;
+
+    let ingredients = accumulateIngredients();
+    if(ingredients === null){
+        return null;
+    }
+    postedDish['dish_ingredients'] = ingredients;
+
+    if(directions.value.trim() !== ''){
+        postedDish['dish_directions'] = directions.value.trim();
+    }
+    else{
+        alert('You must include direction steps in the recipe.');
+        return null;
+    }
+
+    if(prepTime.value.trim() !== ''){
+        postedDish['dish_prepTime'] = prepTime.value.trim();
+    }
+    else{
+        alert('You must include estimated prepation time in the recipe.');
+        return null;
+    }
+
+    if(dishVideo.files.length > 0) {
+        postedDish['dish_video'] = dishVideo.files[0];
     }
 
     return postedDish;
@@ -277,7 +402,38 @@ function collectPostedDishData(){
 
 function onDishPost(){
     let dishData = collectPostedDishData();
+    if(dishData === null){
+        return;
+    }
     togglePostModal();
+    dishData["owner_email"] = String(window.localStorage.getItem('EMAIL'));
+    var form_data = new FormData();
+
+    for ( var key in dishData ) {
+        form_data.append(key, dishData[key]);
+    }
+    console.log(dishData);
+    $.ajax({
+        type: 'POST',
+        url: 'http://localhost:8000/postDish',
+        contentType: false,
+        processData: false,
+        data: form_data,
+        success: function(res) {
+            // console.log(JSON.stringify(res));
+            console.log('Response', res);
+            populatePosts();
+            // var expires = (new Date(Date.now()+ 86400*1000)).toUTCString();
+            // document.cookie = "FOOD_LOVERS_LOGIN=" + res["email"] + "; expires=" + expires + ";path=/;";
+            // locallyStoreUser(res);
+            // populateProfileData();
+        },
+        error: function(error){
+            console.log('Error');
+            console.log(JSON.stringify(error));
+        }
+    })
+
 }
 
 
