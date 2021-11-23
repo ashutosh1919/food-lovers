@@ -62,6 +62,36 @@ Route::post('/login', function(Request $request){
     return response()->json($response);
 });
 
+Route::post('/getUser', function (Request $request){
+    $document = json_decode($request->getContent(), true);
+    $query = getUserQuery($document['email']);
+    $results = DB::select($query);
+    $row = (Array)$results[0];
+    $response = Array('email' => $row['EMAIL'],
+        'name' => $row['NAME'],
+        'profile' => $row['PROFILE_URL'],
+        'gender' => $row['GENDER'],
+        'location' => $row['LOCATION'],
+        'caption' => $row['CAPTION'],
+        'created_at' => $row['CREATED_AT']);
+    return json_encode($response);
+});
+
+Route::post('/getUserFromId', function (Request $request){
+    $document = json_decode($request->getContent(), true);
+    $query = getUserFromIdQuery($document['id']);
+    $results = DB::select($query);
+    $row = (Array)$results[0];
+    $response = Array('email' => $row['EMAIL'],
+        'name' => $row['NAME'],
+        'profile' => $row['PROFILE_URL'],
+        'gender' => $row['GENDER'],
+        'location' => $row['LOCATION'],
+        'caption' => $row['CAPTION'],
+        'created_at' => $row['CREATED_AT']);
+    return json_encode($response);
+});
+
 Route::post('/updateUser', function(Request $request){
     $document = json_decode($request->getContent(), true);
 
@@ -116,5 +146,26 @@ Route::post('/getSelfPostedDishes', function (Request $request){
     $document = json_decode($request->getContent(), true);
     $id = getIdFromEmail($document['owner_email']);
     $results = DB::select(getUserDishesQuery($id));
+    return json_encode(Array('data' => $results));
+});
+
+Route::get('/getRecentPostedDishes', function (Request $request){
+    $query = getRecentDishesQuery();
+    $results = DB::select($query);
+    return json_encode(Array('data' => $results));
+});
+
+Route::post('/postDishComment', function (Request $request){
+    $document = json_decode($request->getContent(), true);
+    $id = getIdFromEmail($document['email']);
+    $query = postDishCommentQuery($document["comment_text"], $id, $document["dish_id"]);
+    DB::insert($query);
+    return json_encode(Array('status' => 200));
+});
+
+Route::post('/getDishComments', function (Request $request){
+    $document = json_decode($request->getContent(), true);
+    $query = getDishCommentsQuery($document["dish_id"]);
+    $results = DB::select($query);
     return json_encode(Array('data' => $results));
 });

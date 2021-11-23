@@ -46,11 +46,20 @@ function populatePostCards(data){
 
         // Tag div
         let tagDiv = document.createElement('div');
-        tagDiv.className = 'px-6 pb-2';
+        tagDiv.className = 'px-6 pb-2 flex flex-row';
         let tagSpan = document.createElement('span');
         tagSpan.className = 'inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2';
         tagSpan.textContent = dish["CUISINE_TYPE"];
         tagDiv.appendChild(tagSpan);
+
+        // Edit button
+        let editButton = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        editButton.innerHTML = `<path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>`;
+        editButton.setAttribute("class", "w-6 h-6 fill-current text-blue-600 ml-auto cursor-pointer");
+        editButton.setAttribute("viewBox", "0 0 20 20");
+        editButton.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        tagDiv.appendChild(editButton);
+        // <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"></svg>
 
         postCard.appendChild(dishImage);
         postCard.appendChild(textDiv);
@@ -77,7 +86,12 @@ function populatePosts(){
                 // console.log('Response', res);
                 console.log(typeof res);
                 data = JSON.parse(res);
-                populatePostCards(data["data"]);
+                if(data["data"].length === 0){
+                    document.getElementById('self-no-posts').style.display = 'block';
+                }
+                else{
+                    populatePostCards(data["data"]);
+                }
             },
             error: function(error){
                 console.log('Error');

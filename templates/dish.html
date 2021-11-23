@@ -10,7 +10,6 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 </head>
 <body class="bg-blue-50 overflow-x-hidden">
-
     <!-- Header Navigation Section -->
     <header>
         <nav class="bg-white shadow-lg">
@@ -75,72 +74,47 @@
 		</nav>
     </header>
 
-    <!--Hero Section-->
-	<section class="relative">
-		<div class="container mx-auto flex flex-col lg:flex-row items-center gap-12 mt-10">
-		  <!-- Content -->
-		  <div class="flex flex-1 flex-col items-center lg:items-start">
-			<h2 class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-500 font-bold text-3xl md:text-4 lg:text-6xl text-center lg:text-center mb-2 py-2">
-				Learn. Cook. Share.<br/>Cooking Made Easy.
-			</h2>
-			<p class="font-thin text-xl md:text-3xl text-center lg:text-left mb-6">
-				Say good bye to long and frustrating <br/>
-				food blogs and recipe videos. Access <br/>
-				our recipe cards to prepare any dish <br/>
-				in minutes.
-			</p>
-			<div class="flex mx-auto md:mx-40 justify-center flex-wrap gap-6">
-			  <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white text-xl font-regular py-2 px-4 rounded">
-				Browse Dish
-			  </button>
-			</div>
-		  </div>
-		  <!-- Image -->
-		  <div class="flex justify-center flex-1 mb-10 md:mb-16 lg:mb-0 z-10">
-			<img class="w-5/6 h-5/6 sm:w-3/4 sm:h-3/4 md:w-full md:h-full" src="../assets/images/hero-dish.png" alt="" />
-		  </div>
+    <!--Dish Details-->
+
+
+	<!--Comments-->
+	<div class="flex mx-auto items-center justify-center shadow-lg mb-4 w-11/12 md:w-8/12">
+		<form class="w-full bg-white rounded-lg px-4 pt-2">
+		   <div class="flex flex-wrap -mx-3 mb-6">
+			  <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg font-medium">Add a new comment</h2>
+			  <div class="w-full md:w-full px-3 mb-2 mt-2">
+				 <textarea id="dish-new-comment-text" class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-regular placeholder-gray-700 focus:outline-none focus:bg-white" name="body" placeholder='Type Your Comment' required></textarea>
+			  </div>
+			  <div class="w-full md:w-full flex items-start md:w-full px-3">
+				 <div class="flex items-start w-1/2 text-gray-700 px-2 mr-auto">
+					<svg fill="none" class="w-5 h-5 text-gray-600 mr-1" viewBox="0 0 24 24" stroke="currentColor">
+					   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+					</svg>
+					<p class="text-xs md:text-sm pt-px">You must be logged in to comment.</p>
+				 </div>
+				 <div class="-mr-1">
+					<input onClick="onCommentSubmitted()" type='submit' class="bg-blue-600 text-white font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-blue-700 cursor-pointer" value='Post Comment'>
+				 </div>
+			  </div>
+		   </form>
+
+		   <!--Previously added comments-->
+		   <p id="dish-no-comments" class="mx-auto text-center text-sm font-medium text-gray-400 mt-4">No Comments</p>
+		   <div id="dish-comments" class="w-full px-4 pt-2 pb-2 mt-4">
+			   <!-- <div class="flex flex-row w-full p-2">
+					<img class="w-14 md:w-20 h-14 md:h-20 mr-2 object-cover rounded-full cursor-pointer" src="../assets/images/default-profile.jpeg" />
+					<div class="ml-2">
+						<h2 class="text-gray-800 text-lg font-medium mb-2 cursor-pointer">Ashutosh Hathidara</h2>
+						<p class="font-regular text-gray-600">The Short Symphony, or Symphony No. 2, is a symphony written by the American composer Aaron Copland from 1931 to 1933. The name derives from its short length of only 15 minutes. The work is dedicated to Copland's friend, the Mexican composer and conductor Carlos Chávez (pictured). The composition contains complex rhythms and polyharmonies, and incorporates the composer's emerging interest in serialism and Mexican music. Copland later arranged the work as a sextet. The symphony was not widely performed during Copland's</p>
+					</div>
+				</div> -->
+		   </div>
 		</div>
-		<!-- Rounded Rectangle -->
-		<div
-		  class="
-			hidden
-			md:block
-			overflow-hidden
-			bg-bookmark-purple
-			rounded-l-full
-			absolute
-			h-80
-			w-2/4
-			top-32
-			right-0
-			lg:
-			-bottom-28
-			lg:-right-36
-		  "
-		></div>
-	  </section>
+	 </div>
+    
 
-	  <!--Browse Dish Section-->
-	  <section class="relative md:m-10">
-		  <div class="font-medium text-2xl md:text-4xl text-center mb-6">Search Your Favorite Dish</div>
-		  <div class="bg-white p-3 shadow-sm rounded-sm">
-			  <!--Search bar-->
-			  <div class="border rounded overflow-hidden flex mb-4">
-				<input type="text" class="w-11/12 px-4 py-2 border-gray-300 focus:ring-blue-600 font-regular" placeholder="What are you looking for?">
-				<button class="flex w-1/12 items-center justify-center md:px-4 border-l">
-				  <svg class="h-4 w-4 text-grey-dark" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/></svg>
-				</button>
-			  </div>
-
-			  <!--Recent Posts-->
-			  <div id="home-posts" class="grid grid-cols-1 md:grid-cols-4 gap-3">
-
-			  </div>
-		  </div>
-	  </section>
-
-	  <script type="text/javascript" src='../scripts/loginHandler.js'></script>
-	  <script type="text/javascript" src='../scripts/homeDishesHandler.js'></script>
+    <script type="text/javascript" src='../scripts/loginHandler.js'></script>
+	<script type="text/javascript" src='../scripts/dishPageHandler.js'></script>
 
 </body>
 </html>

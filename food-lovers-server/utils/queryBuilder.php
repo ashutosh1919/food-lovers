@@ -1,8 +1,9 @@
 <?php
 
-global $users, $dishes;
+global $users, $dishes, $comments;
 $users = 'users';
 $dishes = 'dishes';
+$comments = 'comments';
 
 function createUserQuery($name, $email, $password, $createdAt){
     global $users;
@@ -13,6 +14,18 @@ function createUserQuery($name, $email, $password, $createdAt){
 function createLoginQuery($email, $password){
     global $users;
     $query = "SELECT * FROM $users where EMAIL='$email' AND PASSWORD='$password';";
+    return $query;
+}
+
+function getUserQuery($email){
+    global $users;
+    $query = "SELECT * FROM $users WHERE EMAIL='$email';";
+    return $query;
+}
+
+function getUserFromIdQuery($id){
+    global $users;
+    $query = "SELECT * FROM $users WHERE ID=$id;";
     return $query;
 }
 
@@ -62,7 +75,25 @@ function postDishQuery($document){
 
 function getUserDishesQuery($id){
     global $dishes;
-    $query = "SELECT * FROM $dishes WHERE OWNER_ID=$id";
+    $query = "SELECT * FROM $dishes WHERE OWNER_ID=$id ORDER BY DISH_POSTED_AT DESC;";
+    return $query;
+}
+
+function getRecentDishesQuery(){
+    global $dishes;
+    $query = "SELECT * FROM $dishes ORDER BY DISH_POSTED_AT DESC LIMIT 8;";
+    return $query;
+}
+
+function postDishCommentQuery($text, $user_id, $dish_id){
+    global $comments;
+    $query = "INSERT INTO $comments (OWNER_ID, DISH_ID, COMMENT_TEXT) VALUES ($user_id, $dish_id, '". $text ."');";
+    return $query;
+}
+
+function getDishCommentsQuery($dish_id){
+    global $comments;
+    $query = "SELECT * FROM $comments WHERE DISH_ID = $dish_id ORDER BY COMMENT_DATETIME DESC;";
     return $query;
 }
 
