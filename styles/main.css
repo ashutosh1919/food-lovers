@@ -118,3 +118,17 @@ body.modal-active {
      -webkit-animation: slideInBottom 2s ease;
      animation: slideInBottom 2s ease;
  }
+
+ @keyframes slideUp {
+     0%{
+        transform: translateY(100px);
+     }
+     100%{
+        transform: translateY(0);
+     }
+ }
+
+ .slideUp {
+    -webkit-animation: slideUp 2s ease;
+    animation: slideUp 2s ease;
+ }

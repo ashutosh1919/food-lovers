@@ -79,17 +79,23 @@
 	<section class="relative">
 		<div class="container mx-auto flex flex-col lg:flex-row items-center gap-12 mt-10">
 		  <!-- Content -->
-		  <div class="flex flex-1 flex-col items-center lg:items-start">
-			<h2 class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-500 font-bold text-3xl md:text-4 lg:text-6xl text-center lg:text-center mb-2 py-2 fadeInRight">
+		  <div class="flex flex-1 flex-col items-center lg:items-start overflow-hidden">
+			<h2 class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-500 font-bold text-3xl md:text-4 lg:text-6xl text-center lg:text-center mb-2 py-2 slideUp">
 				Learn. Cook. Share.<br/>Cooking Made Easy.
 			</h2>
-			<p class="font-thin text-xl md:text-3xl text-center lg:text-left mb-6 fadeInRight">
-				Say good bye to long and frustrating <br/>
-				food blogs and recipe videos. Access <br/>
-				our recipe cards to prepare any dish <br/>
-				in minutes.
+			<div class="overflow-hidden">
+			<p class="font-thin text-xl md:text-3xl text-center lg:text-left slideUp">
+				Say good bye to long and frustrating
 			</p>
-			<div class="flex mx-auto md:mx-40 justify-center flex-wrap gap-6">
+			<p class="font-thin text-xl md:text-3xl text-center lg:text-left slideUp">
+				food blogs and recipe videos. Access </p>
+			<p class="font-thin text-xl md:text-3xl text-center lg:text-left slideUp">
+				our recipe cards to prepare any dish </p>
+			<p class="font-thin text-xl md:text-3xl text-center lg:text-left slideUp">
+				in minutes.</p>
+			</p>
+		    </div>
+			<div class="flex mx-auto md:mx-40 mt-6 justify-center flex-wrap gap-6">
 			  <a href="#search-dish-call">
 			  <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white text-xl font-regular py-2 px-4 rounded transition duration-500 ease-in-out bg-blue-600 hover:bg-red-600 transform hover:-translate-y-1 hover:scale-110 ...">
 				Browse Dish
