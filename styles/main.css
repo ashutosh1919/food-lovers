@@ -71,6 +71,35 @@ body.modal-active {
 	}
 }
 
+@keyframes fadeInRight {
+	from {
+		transform: translate3d(-20%, 0, 0);
+	}
+	to {
+		transform: translate3d(0, 0, 0);
+	}
+}
+.fadeInRight {
+    -webkit-animation: fadeInRight 2s ease;
+    animation: fadeInRight 2s ease;
+}
+
+@keyframes fadeInRotate {
+	from {
+		transform: rotate(-0.5turn);
+	}
+	to {
+		transform: rotate(0turn);
+	}
+}
+
+.fadeInRotate {
+    -webkit-animation: fadeInRotate 2s ease;
+    animation: fadeInRotate 2s ease;
+}
+
+
+
 @keyframes slideInBottom {
 	0% {
 		transform: translateY(100px);
