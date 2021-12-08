@@ -65,7 +65,7 @@ a {
 <body class="bg-blue-50">
     <!-- Header Navigation Section -->
     <header>
-        <nav class="bg-white shadow-lg">
+        <nav class="bg-white shadow-lg fadeInTop">
 			<div class="max-w-6xl mx-auto px-4">
 				<div class="flex justify-between">
 					<div class="flex space-x-7">
