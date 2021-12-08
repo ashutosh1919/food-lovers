@@ -125,6 +125,13 @@ Route::get('/images/{file}', [ function ($file) {
     }
 }]);
 
+Route::get('/videos/{file}', [ function ($file) {
+    $path = public_path('storage/videos/'.$file);
+    if (file_exists($path)) {
+        return response()->file($path, array('Content-Type' =>'video/mp4'));
+    }
+}]);
+
 Route::post('/postDish', function (Request $request){
     $document = $request->all();
     $dishImage = $request->file('dish_image')->store('images');
@@ -142,6 +149,22 @@ Route::post('/postDish', function (Request $request){
     return json_encode(Array('status' => 200));
 });
 
+Route::post('/updateDish', function (Request $request){
+    $document = $request->all();
+    if($request->has('dish_image')){
+        $dishImage = $request->file('dish_image')->store('images');
+        $document['dish_image'] = asset($dishImage);
+    }
+    if($request->has('dish_video')){
+        $dishVideo = $request->file('dish_video')->store('videos');
+        $document['dish_video'] = asset($dishVideo);
+    }
+    $document['owner_id'] = getIdFromEmail($document['owner_email']);
+    $query = updateDishQuery($document);
+    DB::update($query);
+    return json_encode(Array('status' => 200));
+});
+
 Route::post('/getSelfPostedDishes', function (Request $request){
     $document = json_decode($request->getContent(), true);
     $id = getIdFromEmail($document['owner_email']);
@@ -151,6 +174,21 @@ Route::post('/getSelfPostedDishes', function (Request $request){
 
 Route::get('/getRecentPostedDishes', function (Request $request){
     $query = getRecentDishesQuery();
+    $results = DB::select($query);
+    return json_encode(Array('data' => $results));
+});
+
+Route::post('/getDish', function (Request $request){
+    $document = json_decode($request->getContent(), true);
+    $query = getDishFromIdQuery($document["dish_id"]);
+    $result = DB::select($query);
+    $row = (Array)$result[0];
+    return json_encode($row);
+});
+
+Route::post('/searchDishes', function (Request $request){
+    $document = json_decode($request->getContent(), true);
+    $query = getPatternSearchDishQuery($document["pattern"]);
     $results = DB::select($query);
     return json_encode(Array('data' => $results));
 });
@@ -168,4 +206,46 @@ Route::post('/getDishComments', function (Request $request){
     $query = getDishCommentsQuery($document["dish_id"]);
     $results = DB::select($query);
     return json_encode(Array('data' => $results));
+});
+
+Route::post('/countLikes', function (Request $request){
+    $document = json_decode($request->getContent(), true);
+    $query = getNumLikeDishQuery($document['dish_id']);
+    $result = DB::select($query);
+    $row = (Array)$result[0];
+    return json_encode(Array('status' => 200, 'likes' => $row['LIKES']));
+});
+
+Route::post('/countUserLikes', function (Request $request){
+    $document = json_decode($request->getContent(), true);
+    $owner_id = getIdFromEmail($document['email']);
+    $query = getNumLikeDishUserQuery($owner_id, $document['dish_id']);
+    $result = DB::select($query);
+    $row = (Array)$result[0];
+    return json_encode(Array('status' => 200, 'likes' => $row['LIKES']));
+});
+
+Route::post('/likeDish', function (Request $request){
+    $document = json_decode($request->getContent(), true);
+    $owner_id = getIdFromEmail($document['email']);
+    $query = getLikeDishQuery($owner_id, $document['dish_id']);
+    DB::insert($query);
+    return json_encode(Array('status' => 200));
+});
+
+Route::post('/unlikeDish', function (Request $request){
+    $document = json_decode($request->getContent(), true);
+    $owner_id = getIdFromEmail($document['email']);
+    $query = getUnlikeDishQuery($owner_id, $document['dish_id']);
+    DB::delete($query);
+    return json_encode(Array('status' => 200));
+});
+
+Route::post('/countTotalLikesUser', function (Request $request){
+    $document = json_decode($request->getContent(), true);
+    $id = getIdFromEmail($document['user_email']);
+    $query = getTotalUserLikesQuery($id);
+    $result = DB::select($query);
+    $row = (Array)$result[0];
+    return json_encode(Array('status' => 200, 'likes' => $row['LIKES']));
 });

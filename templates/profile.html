@@ -94,8 +94,8 @@
                         class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                         <li class="flex items-center py-3 font-regular">
                             <span>Level</span>
-                            <span class="ml-auto"><span
-                                    class="bg-blue-600 py-1 px-2 rounded text-white text-sm">Novice</span></span>
+                            <span class="ml-auto"><span id="self-badge"
+                                    class="py-1 px-2 rounded text-white text-sm">Novice</span></span>
                         </li>
                         <li class="flex items-center py-3 font-regular">
                             <span>Member since</span>
@@ -370,7 +370,7 @@
                 <!--Preparation Video-->
                 <div class="mb-4">
                     <label class="text-sm font-regular text-black block mb-1" for="user_avatar">Upload Prepartion Video (optional)</label>
-                    <input class="block w-full cursor-pointer bg-blue-50 border border-blue-300 text-gray-900 focus:outline-none focus:border-transparent text-sm rounded-lg" aria-describedby="user_avatar_help" id="post-dish-video" type="file" accept="video/mp4, video/mov, video/mkv">
+                    <input class="block w-full cursor-pointer bg-blue-50 border border-blue-300 text-gray-900 focus:outline-none focus:border-transparent text-sm rounded-lg" aria-describedby="user_avatar_help" id="post-dish-video" type="file" accept="video/mp4">
                     <div class="mt-1 text-sm text-gray-500" id="user_avatar_help">A dish preparation video is useful for people to quickly follow procedure.</div>
                 </div>
 
@@ -380,6 +380,115 @@
             <div class="flex justify-end pt-2">
             <button onClick="onDishPost()" class="px-4 bg-transparent p-3 rounded-lg text-blue-600 font-regular hover:bg-gray-100 mr-2">Save</button>
             <button class="post-modal-close px-4 bg-blue-600 p-3 rounded-lg text-white font-regular hover:bg-blue-700">Close</button>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+
+    <!--Edit Post Modal-->
+    <div class="edit-post-modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+        <div class="edit-post-modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+        
+        <div class="edit-post-modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+        
+        <div class="edit-post-modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+            <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+            </svg>
+            <span class="text-sm font-regular">(Esc)</span>
+        </div>
+
+        <!-- Add margin if you want to see some of the overlay behind the modal-->
+        <div class="edit-post-modal-content py-4 text-left px-6 overflow-auto h-96">
+            <!--Title-->
+            <div class="flex justify-between items-center pb-3">
+            <p class="text-2xl font-medium text-blue-600">Edit Dish</p>
+            <div class="edit-post-modal-close cursor-pointer z-50">
+                <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                </svg>
+            </div>
+            </div>
+
+            <!--Body-->
+            <div class="container mx-auto">
+                <!--Dish Image-->
+                <div class="mb-4">
+                    <label class="text-sm font-regular text-black block mb-1" for="user_avatar">Upload Dish Image</label>
+                    <input class="block w-full cursor-pointer bg-blue-50 border border-blue-300 text-gray-900 focus:outline-none focus:border-transparent text-sm rounded-lg" aria-describedby="user_avatar_help" id="edit-post-dish-image" type="file" accept="image/png, image/jpeg, image/jpg">
+                    <div class="mt-1 text-sm text-gray-500" id="user_avatar_help">A dish picture is useful for people to see the final recipe.</div>
+                </div>
+
+                <!--Dish Name-->
+                <div class="mb-4">
+                    <label for="post-dish-name" class="text-sm font-regular text-black block mb-1">Name of Dish</label>
+                    <input type="text" id="edit-post-dish-name" class="bg-blue-50 border border-gray-300 text-gray-900 sm:text-sm font-light rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Italian Noodles" required>
+                </div>
+
+                <!--Cuisine type-->
+                <div class="mb-4">
+                    <label for="edit-post-cuisine-types" class="text-sm font-regular text-gray-900 block mb-1">Select Cuisine Type</label>
+                    <select id="edit-post-cuisine-types" class="bg-blue-50 border border-gray-300 text-gray-900 sm:text-sm font-light rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
+                        <option>American</option>
+                        <option>Indian</option>
+                        <option>French</option>
+                        <option>Chinese</option>
+                        <option>Japanese</option>
+                        <option>Italian</option>
+                        <option>Spanish</option>
+                        <option>Greek</option>
+                        <option>Mediterranean</option>
+                        <option>Lebanese</option>
+                        <option>Moroccan</option>
+                        <option>Turkish</option>
+                        <option>Thai</option>
+                        <option>Cajun</option>
+                        <option>Mexican</option>
+                        <option>Caribbean</option>
+                        <option>German</option>
+                        <option>Russian</option>
+                        <option>Hungarian</option>
+                    </select>
+                </div>
+
+                <!--Ingredients-->
+                <div id='edit-post-ingredients-group' class='mb-4'>
+                    <label class="text-sm font-regular text-gray-900 block mb-1">Ingredients</label>
+                    <div id="edit-post-ingredients-inputs" class="mb-2">
+                        <!-- <input type="text" class="bg-blue-50 border border-gray-300 text-gray-900 sm:text-sm font-light rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 mb-2" placeholder="Ingredient 1" required> -->
+                    </div>
+                    <button type="button" id="edit-post-add-ingredients" onClick="addEditIngredientInput()" class="flex flex-row items-center bg-blue-100 hover:bg-blue-200 text-gray-900 text-sm font-regular py-2 px-4 rounded-full">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                        Add Ingredient
+                    </button>
+                </div>
+
+                <!--Directions-->
+                <div class="mb-4">
+                    <label class="text-sm font-regular text-gray-900 block mb-1">Directions</label>
+                    <textarea id="edit-post-directions" class="bg-blue-50 border border-gray-300 text-gray-900 sm:text-sm font-light rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Steps to prepare dish"></textarea>
+                </div>
+
+                <!--Preparation Time-->
+                <div class="mb-4">
+                    <label class="text-sm font-regular text-gray-900 block mb-1">Preparation Time</label>
+                    <input type="text" id="edit-post-prep-time" class="bg-blue-50 border border-gray-300 text-gray-900 sm:text-sm font-light rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 mb-2" placeholder="30 Minutes, 1.5 Hour etc." required>
+                </div>
+
+                <!--Preparation Video-->
+                <div class="mb-4">
+                    <label class="text-sm font-regular text-black block mb-1" for="user_avatar">Upload Prepartion Video (optional)</label>
+                    <input class="block w-full cursor-pointer bg-blue-50 border border-blue-300 text-gray-900 focus:outline-none focus:border-transparent text-sm rounded-lg" aria-describedby="user_avatar_help" id="edit-post-dish-video" type="file" accept="video/mp4">
+                    <div class="mt-1 text-sm text-gray-500" id="user_avatar_help">A dish preparation video is useful for people to quickly follow procedure.</div>
+                </div>
+
+            </div>
+
+            <!--Footer-->
+            <div class="flex justify-end pt-2">
+            <button id="edit-post-modal-save" class="px-4 bg-transparent p-3 rounded-lg text-blue-600 font-regular hover:bg-gray-100 mr-2">Save</button>
+            <button class="edit-post-modal-close px-4 bg-blue-600 p-3 rounded-lg text-white font-regular hover:bg-blue-700">Close</button>
             </div>
             
         </div>

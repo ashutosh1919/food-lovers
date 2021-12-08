@@ -57,3 +57,31 @@ body.modal-active {
     overflow-x: hidden;
     overflow-y: visible !important;
 }
+
+@keyframes fadeInTop {
+	from {
+		transform: translate3d(0, -20%, 0);
+	}
+	to {
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes slideInBottom {
+	0% {
+		transform: translateY(100px);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+
+ .fadeInTop {
+    -webkit-animation: fadeInTop 2s ease;
+    animation: fadeInTop 2s ease;
+ }
+
+ .slideInBottom {
+     -webkit-animation: slideInBottom 2s ease;
+     animation: slideInBottom 2s ease;
+ }

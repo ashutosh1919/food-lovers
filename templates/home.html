@@ -13,7 +13,7 @@
 
     <!-- Header Navigation Section -->
     <header>
-        <nav class="bg-white shadow-lg">
+        <nav class="bg-white shadow-lg fadeInTop">
 			<div class="max-w-6xl mx-auto px-4">
 				<div class="flex justify-between">
 					<div class="flex space-x-7">
@@ -27,7 +27,7 @@
 					<!-- Secondary Navbar items -->
 					<div class="hidden md:flex items-center space-x-3 ">
                         <a href="home.html" class="py-4 px-2 text-base font-regular primary-color">Home</a>
-						<a href="" class="py-4 px-2 text-base font-regular primary-color">Contact Us</a>
+						<a href="contact.php" class="py-4 px-2 text-base font-regular primary-color">Contact Us</a>
 						<a id="nav-profile-img" href="profile.html" class="none md:visible"><img id="nav-profile-img-icon" class="h-9 w-9 rounded-full object-cover items-center justify-content" src='../assets/images/default-profile.jpeg' /></a>
 						<a id="nav-login-btn" href="login.html" class="py-2 px-2 text-base font-regular primary-color">Log In</a>
 						<a id="nav-signup-btn" href="signup.html">
@@ -59,7 +59,7 @@
 				<ul class="">
 					<li id="nav-profile-img-mobile"><a href="profile.html" class="block text-sm px-2 py-4 hover:bg-blue-500 transition duration-300 text-base font-regular">Profile</a></li>
 					<li class="active"><a href="home.html" class="block text-sm px-2 py-4 text-white bg-blue-600 text-base font-regular">Home</a></li>
-					<li><a href="#services" class="block text-sm px-2 py-4 hover:bg-blue-600 transition duration-300 text-base font-regular">Contact Us</a></li>
+					<li><a href="contact.php" class="block text-sm px-2 py-4 hover:bg-blue-600 transition duration-300 text-base font-regular">Contact Us</a></li>
 					<li id="nav-login-btn-mobile"><a href="login.html" class="block text-sm px-2 py-4 hover:bg-blue-500 transition duration-300 text-base font-regular">Log In</a></li>
 					<li id="nav-signup-btn-mobile"><a href="signup.html" class="block text-sm px-2 py-4 hover:bg-blue-500 transition duration-300 text-base font-regular">Sign Up</a></li>
 				</ul>
@@ -126,19 +126,19 @@
 		  <div class="bg-white p-3 shadow-sm rounded-sm">
 			  <!--Search bar-->
 			  <div class="border rounded overflow-hidden flex mb-4">
-				<input type="text" class="w-11/12 px-4 py-2 border-gray-300 focus:ring-blue-600 font-regular" placeholder="What are you looking for?">
+				<input id="home-dish-search-bar" type="text" class="w-11/12 px-4 py-2 border-gray-300 focus:ring-blue-600 font-regular" placeholder="What are you looking for?">
 				<button class="flex w-1/12 items-center justify-center md:px-4 border-l">
 				  <svg class="h-4 w-4 text-grey-dark" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/></svg>
 				</button>
 			  </div>
 
 			  <!--Recent Posts-->
+			  <p id="home-no-posts" class="hidden text-center my-4 text-sm font-medium text-gray-400">No Dishes Found</p>
 			  <div id="home-posts" class="grid grid-cols-1 md:grid-cols-4 gap-3">
 
 			  </div>
 		  </div>
 	  </section>
-
 	  <script type="text/javascript" src='../scripts/loginHandler.js'></script>
 	  <script type="text/javascript" src='../scripts/homeDishesHandler.js'></script>
 

@@ -1,14 +1,25 @@
 
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
 function populateRecentPostedDishes(data) {
     let postSection = document.getElementById('home-posts');
-    console.log(data);
+    removeAllChildNodes(postSection);
 
     for(let i = 0; i < data.length; i++){
         let dish = data[i];
 
         // Card div
         let postCard = document.createElement('div');
-        postCard.className = 'rounded overflow-hidden shadow-lg';
+        postCard.id = dish["DISH_ID"];
+        postCard.className = 'rounded overflow-hidden shadow-lg cursor-pointer';
+        postCard.onclick = () => {
+            window.localStorage.setItem('WATCH_DISH_ID', dish["DISH_ID"]);
+            window.location.href = 'dish.html'; 
+        }
 
         // Image
         let dishImage = document.createElement('img');
@@ -51,9 +62,6 @@ function fetchDishes(){
         type: 'GET',
         url: 'http://localhost:8000/getRecentPostedDishes',
         success: function(res) {
-            // console.log(JSON.stringify(res));
-            // console.log('Response', res);
-            console.log(typeof res);
             data = JSON.parse(res);
             populateRecentPostedDishes(data["data"]);
         },
@@ -63,5 +71,52 @@ function fetchDishes(){
         }
     })
 }
+
+
+const throttledFunction = (func, limit) => {
+    let flag = true;
+    return function(element) {
+        if(flag){
+            func(element);
+            flag = false;
+            setTimeout(() => { flag = true; }, limit);
+        }
+    }
+}
+
+function onSearchChange(element){
+    // console.log('Hi');
+    if(element.target.value.trim() === ''){
+        // console.log('Hi2');
+        fetchDishes();
+        return;
+    }
+    let pattern = "%" + element.target.value + "%";
+    $.ajax({
+        type: 'POST',
+        url: 'http://localhost:8000/searchDishes',
+        data: JSON.stringify({"pattern": pattern}),
+        success: function(res) {
+            data = JSON.parse(res);
+            if(data["data"].length === 0){
+                document.getElementById('home-no-posts').style.display = 'block';
+                populateRecentPostedDishes([]);
+            }
+            else{
+                document.getElementById('home-no-posts').style.display = 'none';
+                populateRecentPostedDishes(data["data"]);
+            }
+        },
+        error: function(error){
+            console.log('Error');
+            console.log(JSON.stringify(error));
+        }
+    })
+}
+
+const throttledSearch = throttledFunction(onSearchChange, 500);
+
+let searchBar = document.getElementById('home-dish-search-bar');
+searchBar.addEventListener('input', throttledSearch);
 
 fetchDishes();
