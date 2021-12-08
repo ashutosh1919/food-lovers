@@ -46,7 +46,7 @@ function populatePostCards(data){
 
         // Card div
         let postCard = document.createElement('div');
-        postCard.className = 'rounded overflow-hidden shadow-lg';
+        postCard.className = 'rounded overflow-hidden shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...';
 
         // Image
         let dishImage = document.createElement('img');

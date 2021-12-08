@@ -1,5 +1,9 @@
 @import url('./fonts.css');
 
+html {
+    scroll-behavior: smooth;
+}
+
 .primary-color {
     color: #2563EB;
 }

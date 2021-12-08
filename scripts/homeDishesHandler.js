@@ -15,7 +15,7 @@ function populateRecentPostedDishes(data) {
         // Card div
         let postCard = document.createElement('div');
         postCard.id = dish["DISH_ID"];
-        postCard.className = 'rounded overflow-hidden shadow-lg cursor-pointer';
+        postCard.className = 'rounded overflow-hidden shadow-lg cursor-pointer transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...';
         postCard.onclick = () => {
             window.localStorage.setItem('WATCH_DISH_ID', dish["DISH_ID"]);
             window.location.href = 'dish.html'; 
