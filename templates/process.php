@@ -4,7 +4,7 @@
     {
        $UserName = $_POST['name'];
        $Email = $_POST['email'];
-       $Msg = $_POST['Note'];
+       $Msg = 'Name: ' . $UserName . '   Email: ' . $Email . '  Message: ' . $_POST['Note'];
        $subject = 'Message from Customer';
        $header = array(
         'From' => 'foodloverz2021@gmail.com',
@@ -14,7 +14,7 @@
 
        if(empty($UserName) || empty($Email) || empty($Msg))
        {
-           header('location:contact.php?error');
+           header('location:contact.html?error');
        }
        else
        {
@@ -22,12 +22,12 @@
 
            if(mail($to,$subject,$Msg,$header))
            {
-               header("location:contact.php?success");
+               header("location:contact.html?success");
            }
        }
     }
     else
     {
-        header("location:contact.php");
+        header("location:contact.html");
     }
 ?>
